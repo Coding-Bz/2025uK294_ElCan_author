@@ -1,74 +1,32 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import axios from "axios";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login } from './services/AuthService';
+import { setToken } from './services/AuthorService';
 
-interface LoginValues {
-  email: string;
-  password: string;
-}
-
-const LoginPage: React.FC = () => {
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (values: LoginValues) => {
-    setLoading(true);
-    setError("");
-
+  async function handleLogin() {
     try {
-      const response = await axios.post("http://localhost:3030/login", values);
-      const token = response.data.accessToken;
-      localStorage.setItem("token", token);
-      navigate("/list");
+      const token = await login(email, password);
+      setToken(token);
+      navigate('/authors');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
-      console.error(err);
-      setError("Login failed. Please check your credentials.");
-    } finally {
-      setLoading(false);
+      alert('Login fehlgeschlagen');
     }
-  };
-
-  const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Incorrect E-Mail").required("Required"),
-    password: Yup.string().min(4, "Min. 4 characters").required("Required"),
-  });
+  }
 
   return (
     <div>
       <h2>Login</h2>
-
-      {error && <div>{error}</div>}
-
-      <Formik
-        initialValues={{ email: "", password: "" }}
-        validationSchema={validationSchema}
-        onSubmit={handleLogin}
-      >
-        {({ errors, touched }) => (
-          <Form>
-            <div>
-              <label htmlFor="email">E-Mail</label>
-              <Field name="email" type="email" />
-              {touched.email && errors.email && <div>{errors.email}</div>}
-            </div>
-
-            <div>
-              <label htmlFor="password">Passwort</label>
-              <Field name="password" type="password" />
-              {touched.password && errors.password && <div>{errors.password}</div>}
-            </div>
-
-            <button type="submit" disabled={loading}>
-              {loading ? "Loading..." : "Log in"}
-            </button>
-          </Form>
-        )}
-      </Formik>
+      <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+      <input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
+      <button onClick={handleLogin}>Einloggen</button>
     </div>
   );
-};
+}
 
 export default LoginPage;

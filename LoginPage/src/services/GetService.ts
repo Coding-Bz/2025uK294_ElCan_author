@@ -1,4 +1,3 @@
-// src/services/authorService.ts
 import axios from 'axios';
 
 export type AuthorType = {

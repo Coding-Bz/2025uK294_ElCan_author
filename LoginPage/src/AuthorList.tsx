@@ -1,57 +1,57 @@
-import { useEffect, useState } from 'react';
-import { getAllAuthors } from './services/GetService';
-import { deleteAuthor } from './services/DeleteService';
-import { addAuthor } from './services/AddSer';
-import type { AuthorType } from './services/AddSer';
-import { useNavigate } from 'react-router-dom';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function AuthorList() {
-  const [authors, setAuthors] = useState<AuthorType[]>([]);
-  const [newAuthorName, setNewAuthorName] = useState('');
-  const [newAuthorDate, setNewAuthorDate] = useState('');
-  const navigate = useNavigate();
+interface Author {
+  id: number;
+  author_name: string;
+  birth_date: string;
+}
 
-  const loadAuthors = async () => {
-    const data = await getAllAuthors();
-    setAuthors(data);
-  };
+const AuthorList: React.FC = () => {
+  const [authors, setAuthors] = useState<Author[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    loadAuthors();
+    const fetchAuthors = async () => {
+      try {
+        const token = localStorage.getItem('token'); // Token aus Login holen
+
+        const response = await axios.get('http://localhost:3030/author', {
+          headers: {
+            Authorization: `Bearer ${token}`, // Token im Header mitsenden
+          },
+        });
+
+        console.log('Antwort vom Server:', response.data);
+        setAuthors(response.data); // direktes Array, kein .authors nötig
+      } catch (err: any) {
+        if (err.response && err.response.status === 401) {
+          setError('Nicht autorisiert. Bitte melde dich erneut an.');
+        } else {
+          setError('Ein Fehler ist aufgetreten beim Laden der Autoren.');
+        }
+
+        console.error('AxiosError:', err);
+      }
+    };
+
+    fetchAuthors();
   }, []);
 
-  const handleAddAuthor = async () => {
-    if (!newAuthorName || !newAuthorDate) return;
-    await addAuthor({ author_name: newAuthorName, birth_date: newAuthorDate });
-    setNewAuthorName('');
-    setNewAuthorDate('');
-    loadAuthors();
-  };
-
-  const handleDelete = async (id : number) => {
-    await deleteAuthor(id);
-    loadAuthors();
-  };
-
   return (
-    <>
-      <h1>Autor*innen</h1>
-      <input value={newAuthorName} onChange={(e) => setNewAuthorName(e.target.value)} placeholder="Name" />
-      <input type="date" value={newAuthorDate} onChange={(e) => setNewAuthorDate(e.target.value)} />
-      <button onClick={handleAddAuthor}>Hinzufügen</button>
-
-      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+    <div>
+      <h2>Autorenliste</h2>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <ul>
         {authors.map((author) => (
-          <div key={author.id} style={{ border: '1px solid #ccc', padding: '1rem' }}>
-            <h3>{author.author_name}</h3>
-            <p>Geboren: {author.birth_date}</p>
-            <button onClick={() => navigate(`/author/${author.id}`)}>Info</button>
-            <button onClick={() => handleDelete(author.id)}>Löschen</button>
-          </div>
+          <li key={author.id}>
+            {author.author_name} – geboren am {author.birth_date}
+          </li>
         ))}
-      </div>
-    </>
+      </ul>
+    </div>
   );
-}
+};
 
 export default AuthorList;
