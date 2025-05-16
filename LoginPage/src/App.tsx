@@ -1,33 +1,15 @@
-import './App.css';
-import { useEffect, useState } from 'react';
-import Fruit from './Fruit';
-
-type FruitType = {
-  id: string;
- author_name: number;
-  birth_date: number;
-};
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AuthorList from './AuthorList';
+import AuthorDetail from './AuthorDetail';
 
 function App() {
-  const [fruits, setFruits] = useState<FruitType[]>([]);
-
-  useEffect(() => {
-    fetch('/fruits.json')
-      .then(res => res.json())
-      .then(data => setFruits(data));
-  }, []);
-
   return (
-    <>
-      {fruits.map((fruit, index) => (
-        <Fruit
-          key={index}
-        id={fruit.id}
-          author_name={fruit.author_name}
-          birth_date={fruit.birth_date}
-        />
-      ))}
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<AuthorList />} />
+        <Route path="/author/:id" element={<AuthorDetail />} />
+      </Routes>
+    </Router>
   );
 }
 
