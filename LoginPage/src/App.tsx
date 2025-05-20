@@ -9,6 +9,7 @@ function App() {
       <Route path="/" element={<LoginPage />} />
       <Route path="/authors" element={<AuthorList />} />
       <Route path="/author/:id" element={<AuthorDetail />} />
+      console.log("TOKEN:", localStorage.getItem("token"));
     </Routes>
   );
 }

@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getToken } from './services/AuthorService';
 
 interface Author {
   id: number;
@@ -14,25 +14,23 @@ const AuthorList: React.FC = () => {
 
   useEffect(() => {
     const fetchAuthors = async () => {
+      const token = getToken();
+      console.log("Verwendeter Token in fetchAuthors:", token);
       try {
-        const token = localStorage.getItem('token'); // Token aus Login holen
-
         const response = await axios.get('http://localhost:3030/author', {
           headers: {
-            Authorization: `Bearer ${token}`, // Token im Header mitsenden
+            Authorization: `Bearer ${token}`,
           },
         });
-
-        console.log('Antwort vom Server:', response.data);
-        setAuthors(response.data); // direktes Array, kein .authors nötig
+        setAuthors(response.data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         if (err.response && err.response.status === 401) {
-          setError('Nicht autorisiert. Bitte melde dich erneut an.');
+          setError('Nicht autorisiert. Bitte erneut einloggen.');
         } else {
-          setError('Ein Fehler ist aufgetreten beim Laden der Autoren.');
+          setError('Fehler beim Laden der Autoren.');
         }
-
-        console.error('AxiosError:', err);
+        console.error('Axios Fehler:', err);
       }
     };
 
