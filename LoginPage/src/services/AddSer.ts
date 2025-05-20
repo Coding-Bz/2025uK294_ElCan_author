@@ -13,7 +13,7 @@ export async function addAuthor(newAuthor: { author_name: string; birth_date: st
     newAuthor,
     {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkJlcnJhQGdvb2dsZS5jb20iLCJpYXQiOjE3NDczNzcxMTYsImV4cCI6MTc0NzM4MDcxNiwic3ViIjoiMyJ9.SQvYOmXBknH9LWpkVs4AktV87ehRONDYOZd4uVy7xcw`,
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkJlcmF5QGdvb2dsZS5jb20iLCJpYXQiOjE3NDc3MjYwOTYsImV4cCI6MTc0NzcyOTY5Niwic3ViIjoiNCJ9.yxIdCaCLoKA8xz_hmQpqF_tY_sRN3sk7-sCaVa3uGlM`,
         'Content-Type': 'application/json',
       },
     }
