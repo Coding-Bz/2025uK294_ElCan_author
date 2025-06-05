@@ -3,8 +3,7 @@ import LoginPage from './pages/LoginPage';
 import AuthorListPage from './pages/AuthorListPage';
 import AuthorDetailPage from './pages/AuthorDetailPage';
 import AuthorEditPage from './pages/AuthorEditPage';
-
-
+import AuthorAdd from './pages/AuthorAdd';
 
 function App() {
   return (
@@ -13,6 +12,7 @@ function App() {
       <Route path="/authors" element={<AuthorListPage />} />
       <Route path="/author/:id" element={<AuthorDetailPage />} />
       <Route path="/author/:id/edit" element={<AuthorEditPage />} />
+      <Route path="/authors/add" element={<AuthorAdd />} />
     </Routes>
   );
 }

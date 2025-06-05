@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/AuthService';
 
+
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,7 +12,7 @@ function LoginPage() {
     try {
       const response = await login(email, password);
       const token = response.accessToken; 
-      localStorage.setItem('token', token);
+      localStorage.setItem('accessToken', token);
       navigate('/authors');
     } catch {
       alert('Login fehlgeschlagen');

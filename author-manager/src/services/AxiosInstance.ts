@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const AxiosInstance = axios.create({
+const baseInstance = axios.create({
   baseURL: 'http://localhost:3030',
 });
 
-AxiosInstance.interceptors.request.use(
+baseInstance.interceptors.request.use(
   config => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -17,4 +17,4 @@ AxiosInstance.interceptors.request.use(
   }
 );
 
-export default AxiosInstance;
+export default baseInstance;
