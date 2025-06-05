@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import AuthorListPage from './pages/AuthorListPage';
-import AuthorDetailPage from './pages/AuthorDetailPage';
-import AuthorEditPage from './pages/AuthorEditPage';
-import AuthorAdd from './pages/AuthorAdd';
+import LoginPage from './Pages/LoginPage';
+import AuthorListPage from './Pages/AuthorListPage';
+import AuthorDetailPage from './Pages/AuthorDetailPage';
+import AuthorEditPage from './Pages/AuthorEditPage';
+import AuthorAdd from './Pages/AuthorAdd';
 
 function App() {
   return (

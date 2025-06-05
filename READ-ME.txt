@@ -1,0 +1,27 @@
+Datum: 05.06.2025
+Ort: Zürich
+
+Anleitung zur Aufsetzung von "üK-Projekt294"
+
+Vorrausetzungen:
+
+Backend (Rest),
+Docker,
+Login Informationen (Berra@gmail.com , Admin123),
+Eine laufende Maschine,
+VSC
+
+Massnahmen bei Problemen:
+
+Ist Docker am laufen?
+Sind die Anmelde Informationen korrekt?
+
+Empfehlungen:
+
+Das Projekt wurde auf sämtliche Fälle ausgetestet, aber bei 
+unerwarteten Problemen empfehle ich höchstens das ganze auf der Seite zu untersuchen 
+und auf die Status Codes zu achten.
+
+
+
+

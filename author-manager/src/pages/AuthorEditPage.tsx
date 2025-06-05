@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import AxiosInstance from '../services/AxiosInstance';
+import AxiosInstance from '../Services/AxiosInstance';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 

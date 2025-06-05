@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import AxiosInstance from '../services/AxiosInstance';
+import AxiosInstance from '../Services/AxiosInstance';
 
 interface Author {
   id: number;
