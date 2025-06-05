@@ -40,6 +40,7 @@ function AuthorDetailPage() {
     <div>
       <h2>{author.author_name}</h2>
       <p>Geboren am: {author.birth_date}</p>
+      <p>Id: {author.id}</p>
       <button onClick={handleDelete}>Löschen</button>
       <button onClick={() => navigate('/authors')}>Zurück</button>
       <button onClick={() => navigate(`/author/${id}/edit`)}>Bearbeiten</button>
